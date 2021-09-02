@@ -1,10 +1,16 @@
 <template>
-  <form class="addlist" @submit.prevent="addList">
+  <form :class="classList" @submit.prevent="addList">
     <input v-model="title" 
       type="text" 
       class="text-input"
-      placeholder="Add new list">
-    <button type="submit" class="add-button">
+      placeholder="Add new list"
+      @focusin="startEditing"
+      @focusout="finishEditing"
+    >
+    <button type="submit" 
+      class="add-button"
+      v-if="isEditing || titleExists"
+    >
       add
     </button>
   </form>
@@ -14,7 +20,24 @@
 export default{
   data(){
     return {
-      title:''
+      title:'',
+      isEditing: false
+    }
+  },
+  computed: {// computedでdataを監視
+    classList() {
+      const classList = ['addlist']
+
+      if (this.isEditing) {
+        classList.push('active')
+      }
+      if (this.titleExists){
+        classList.push('addable')
+      }
+      return classList
+    },
+    titleExists(){
+      return this.title.length>0
     }
   },
   methods:{
@@ -23,6 +46,12 @@ export default{
         title: this.title
       })
       this.title=''
+    },
+    startEditing() {
+      this.isEditing = true
+    },
+    finishEditing() {
+      this.isEditing = false
     }
   }
 }

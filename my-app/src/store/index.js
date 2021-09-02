@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const savedLists = localStorage.getItem('trello-lists')//trello-listsをkyeとする
+const savedLists = localStorage.getItem('trello-lists')
 
 const store = new Vuex.Store({
   state: {
@@ -45,7 +45,10 @@ const store = new Vuex.Store({
 })
 
 store.subscribe((mutation, state) => {
-  localStorage.setItem('trello-lists', JSON.stringify(state.lists))
-})
-
+  localStorage.setItem('trello-lists',JSON.stringify(state.lists))
+});
+//mutationが全て終わったら、stateを受け取る。
+//localStorageに保存するには、JSON形式の文字列型に変換する
 export default store;
+//new Vuex.Storeをexportする
+
