@@ -5,16 +5,34 @@
     </header>
     <main>
       <p class="info-line">All: 0 tasks</p>
-      <ListAdd/> 
+      <div class="list-index">
+        <list v-for="(item, index) in lists"
+              :key="item.id"
+              :title="item.title"
+              :listIndex="index"
+        />
+        <ListAdd/> 
+      </div>
     </main>
   </div>
 </template>
 
 <script>
 import ListAdd from './ListAdd.vue'
-export default{
-  components:{
-    ListAdd
+import List from './List'
+import { mapState } from 'vuex'
+export default {
+  components: {
+    ListAdd,
+    List,
+  },
+  // computed: {
+  //   lists : function(){
+  //     return this.$store.state.lists
+  //   }
+  // }
+  computed: {
+    ...mapState(['lists'])
   }
 }
 </script>
