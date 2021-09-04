@@ -9,6 +9,7 @@
         <list v-for="(item, index) in lists"
               :key="item.id"
               :title="item.title"
+              :cards="item.cards"
               :listIndex="index"
         />
         <ListAdd/> 
@@ -21,10 +22,11 @@
 import ListAdd from './ListAdd.vue'
 import List from './List'
 import { mapState } from 'vuex'
+
 export default {
   components: {
     ListAdd,
-    List,
+    List,//Listへ送っている
   },
   // computed: {
   //   lists : function(){

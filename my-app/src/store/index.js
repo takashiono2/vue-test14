@@ -36,7 +36,13 @@ const store = new Vuex.Store({
     },
     removelist(state,payload){
       state.lists.splice(payload.listIndex,1)
-    }
+    },
+    addCardToList(state, payload) {
+      state.lists[payload.listIndex].cards.push({ body: payload.body })
+    },
+    removeCardFromList(state, payload) {
+      state.lists[payload.listIndex].splice(payload.listIndex,1)//リストから削除
+    },
   },
   actions: {
     addlist(context,payload){
@@ -44,17 +50,23 @@ const store = new Vuex.Store({
     },
     removelist(context,payload){
       context.commit('removelist',payload)
-    }
+    },
+    addCardToList(context, payload) {
+      context.commit('addCardToList', payload)
+    },
+    removeCardFromList(context, payload) {
+      context.commit('removeCardFromList', payload)
+    },
   },
   getters: {
   }
 })
 
 store.subscribe((mutation, state) => {
-  localStorage.setItem('trello-lists',JSON.stringify(state.lists))
+  localStorage.setItem('trello-lists',JSON.stringfy(state.lists))
 });
+
 //mutationが全て終わったら、stateを受け取る。
 //localStorageに保存するには、JSON形式の文字列型に変換する
-export default store;
 //new Vuex.Storeをexportする
-
+export default store;
