@@ -59,14 +59,20 @@ const store = new Vuex.Store({
     },
   },
   getters: {
+    totalCardCount(state) {
+      let count = 0
+      state.lists.map(content => count += content.cards.length)
+      return count
+    }
   }
 })
 
-store.subscribe((mutation, state) => {
-  localStorage.setItem('trello-lists',JSON.stringfy(state.lists))
-});
+store.subscribe((mutation, state) => { 
+  localStorage.setItem('trello-lists',JSON.stringfy(state.lists))}
+)
 
+export default store
 //mutationが全て終わったら、stateを受け取る。
 //localStorageに保存するには、JSON形式の文字列型に変換する
 //new Vuex.Storeをexportする
-export default store;
+
